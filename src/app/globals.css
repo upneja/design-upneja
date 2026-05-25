@@ -1,0 +1,85 @@
+/*
+  Design tokens for design.upneja.ai
+  Aesthetic: Swiss Editorial Grid × Architectural Mono-Color
+  Committed at every fork. No defaults.
+*/
+
+:root {
+  --color-ink: #1A1A1A;
+  --color-paper: #FAFAF7;
+  --color-paper-edge: #E8E5DC;
+  --color-accent: #A41E22;        /* oxblood */
+  --color-link: #0000EE;          /* hyperlink blue, as in editorial */
+  --color-muted: #6B6B66;
+
+  --font-display: "Cabinet Grotesk", "Manrope", sans-serif;
+  --font-text: "Newsreader", "Source Serif Pro", Georgia, serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --max-text-width: 36rem;
+  --max-grid-width: 80rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-text);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  background: var(--color-link);
+  color: var(--color-paper);
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+pre {
+  background: #1A1A1A;
+  color: #FAFAF7;
+  padding: 1rem;
+  overflow-x: auto;
+  border: none;
+  border-radius: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-ink);
+  margin: 2rem 0;
+}
+
+.rule {
+  border-top: 1px solid var(--color-ink);
+}
+
+.rule-thin {
+  border-top: 1px solid var(--color-paper-edge);
+}
