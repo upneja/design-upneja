@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { EXAMPLES } from "@/data/examples";
 import archetypesData from "@/data/archetypes.json";
+import { ShowcaseLink } from "@/components/reskin-showcase";
 import type { Archetype } from "@/lib/types";
 
 const ARCHETYPES = archetypesData as Archetype[];
 const ARCHETYPE_BY_SLUG = Object.fromEntries(ARCHETYPES.map((a) => [a.slug, a]));
+const totalConcepts = EXAMPLES.reduce((sum, example) => sum + example.archetypes.length, 0);
 
 export default function ExamplesPage() {
   return (
@@ -13,131 +15,91 @@ export default function ExamplesPage() {
         <Link href="/reskin" style={{ color: "var(--color-muted)" }}>← /reskin</Link> · Examples
       </p>
       <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(48px, 7vw, 96px)", fontWeight: 700, letterSpacing: "-0.03em", marginBottom: 32 }}>
-        Examples
+        Live examples
       </h1>
       <p style={{ maxWidth: "var(--max-text-width)", fontSize: 19, marginBottom: 48 }}>
-        <Code>/reskin</Code> output from running against real projects. Each row is one project; each
-        card is one concept (one archetype). Concepts are live Next.js routes you can clone and run
-        locally to click through the full hero / detail / action screens.
+        <Code>/reskin</Code> output from real projects, rendered here as public visual previews.
+        Each concept shows the actual design direction across hero, detail, and action screens.
+        Click any preview to open its dedicated showcase page.
       </p>
 
-      {EXAMPLES.map((ex) => (
-        <section key={ex.project} style={{ marginBottom: 96 }}>
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+          borderTop: "1px solid var(--color-ink)",
+          borderLeft: "1px solid var(--color-ink)",
+          marginBottom: 64,
+        }}
+      >
+        {[
+          ["Projects", EXAMPLES.length],
+          ["Concepts", totalConcepts],
+          ["Screens implied", totalConcepts * 3],
+          ["Public previews", totalConcepts],
+        ].map(([label, value]) => (
+          <div
+            key={label}
+            style={{
+              borderRight: "1px solid var(--color-ink)",
+              borderBottom: "1px solid var(--color-ink)",
+              padding: 18,
+            }}
+          >
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 34, lineHeight: 1 }}>
+              {value}
+            </div>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--color-muted)", textTransform: "uppercase", marginTop: 8 }}>
+              {label}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {EXAMPLES.map((example) => (
+        <section key={example.project} style={{ marginBottom: 96 }}>
           <header style={{ borderTop: "1px solid var(--color-ink)", paddingTop: 24, marginBottom: 32, display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 16 }}>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 40, fontWeight: 700, letterSpacing: "-0.01em" }}>
-              {ex.project}
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 40, fontWeight: 700 }}>
+              {example.project}
             </h2>
             <div style={{ fontFamily: "var(--font-display)", fontSize: 13, color: "var(--color-muted)" }}>
-              Run {ex.run_id} · {ex.archetypes.length} concepts
-              {ex.project_url && (
+              Run {example.run_id} · {example.archetypes.length} visual concepts
+              {example.project_url && (
                 <>
                   {" · "}
-                  <a href={ex.project_url} style={{ color: "var(--color-muted)" }}>source</a>
+                  <a href={example.project_url} style={{ color: "var(--color-muted)" }}>source</a>
                 </>
               )}
             </div>
           </header>
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: 0,
-            borderTop: "1px solid var(--color-ink)",
-            borderLeft: "1px solid var(--color-ink)",
-          }}>
-            {ex.archetypes.map((concept) => {
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: 18 }}>
+            {example.archetypes.map((concept) => {
               const archetype = ARCHETYPE_BY_SLUG[concept.archetype_slug];
               if (!archetype) return null;
+
               return (
-                <article key={concept.archetype_slug} style={{
-                  background: archetype.palette.background,
-                  color: archetype.palette.primary,
-                  padding: 24,
-                  borderRight: "1px solid var(--color-ink)",
-                  borderBottom: "1px solid var(--color-ink)",
-                  minHeight: 240,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
-                    <h3 style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: 22,
-                      fontWeight: 700,
-                      lineHeight: 1.1,
-                      color: archetype.palette.primary,
-                    }}>
-                      {concept.archetype_name}
-                    </h3>
-                    <span style={{
-                      background: archetype.palette.accent,
-                      color: archetype.palette.background,
-                      fontFamily: "var(--font-display)",
-                      fontSize: 10,
-                      fontWeight: 700,
-                      padding: "2px 6px",
-                      letterSpacing: "0.05em",
-                      flexShrink: 0,
-                    }}>
-                      {archetype.video_cut_score}/10
-                    </span>
-                  </div>
-                  <p style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: 11,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    opacity: 0.7,
-                    color: archetype.palette.primary,
-                  }}>
-                    {archetype.family}
-                  </p>
-                  <p style={{
-                    fontSize: 14,
-                    lineHeight: 1.45,
-                    color: archetype.palette.primary,
-                    opacity: 0.9,
-                    marginBottom: 12,
-                    flex: 1,
-                  }}>
-                    {concept.brief_excerpt}
-                  </p>
-                  <div style={{ display: "flex", gap: 0, height: 16, border: `1px solid ${archetype.palette.primary}`, opacity: 0.6 }}>
-                    <div style={{ flex: 1, background: archetype.palette.primary }} />
-                    <div style={{ flex: 1, background: archetype.palette.background, borderLeft: `1px solid ${archetype.palette.primary}`, borderRight: `1px solid ${archetype.palette.primary}` }} />
-                    <div style={{ flex: 1, background: archetype.palette.accent }} />
-                  </div>
-                  <p style={{ fontFamily: "var(--font-mono)", fontSize: 10, opacity: 0.65, margin: 0, color: archetype.palette.primary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {concept.lab_path}
-                  </p>
-                </article>
+                <ShowcaseLink
+                  key={concept.archetype_slug}
+                  archetype={archetype}
+                  concept={concept}
+                  project={example.project}
+                  runId={example.run_id}
+                />
               );
             })}
           </div>
         </section>
       ))}
 
-      {EXAMPLES.length === 1 && (
-        <section style={{ marginTop: 64, padding: 32, border: "1px dashed var(--color-muted)" }}>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, marginBottom: 8 }}>
-            More examples coming
-          </h2>
-          <p style={{ fontSize: 15, color: "var(--color-muted)", margin: 0 }}>
-            /reskin runs against <code>reels</code> and <code>upneja-ai</code> are in flight. This page
-            will update with their concepts when they finish.
-          </p>
-        </section>
-      )}
-
-      <section style={{ marginTop: 64, maxWidth: 740 }}>
+      <section style={{ marginTop: 64, maxWidth: 740, borderTop: "1px solid var(--color-ink)", paddingTop: 24 }}>
         <h2 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 600, marginBottom: 16 }}>
-          Running these locally
+          What you are looking at
         </h2>
-        <p style={{ fontSize: 17 }}>
-          Each example concept lives as Next.js route files in a sibling lab repo. To view a concept
-          in the browser, clone the target project, install /reskin, and run it yourself — or browse
-          the brief and code on the local lab path noted on each card.
+        <p style={{ fontSize: 17, margin: 0 }}>
+          These are public-facing previews of the generated directions, not filesystem pointers.
+          The live concept pages preserve the pitch, palette, and screen structure so you can judge
+          whether a direction is worth promoting into the real app.
         </p>
       </section>
     </main>

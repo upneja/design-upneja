@@ -30,5 +30,4 @@ export type ExampleConcept = {
   archetype_slug: string;
   archetype_name: string;
   brief_excerpt: string;
-  lab_path: string;
 };
