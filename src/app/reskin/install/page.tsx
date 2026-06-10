@@ -22,7 +22,7 @@ export default function InstallPage() {
           1. Run the installer
         </h2>
         <pre>
-{`curl -fsSL https://raw.githubusercontent.com/ayushupneja/reskin/main/install.sh | bash`}
+{`curl -fsSL https://raw.githubusercontent.com/upneja/reskin/main/install.sh | bash`}
         </pre>
         <p style={{ fontSize: 15, color: "var(--color-muted)", marginTop: 12 }}>
           Or clone the repo and run <code>install.sh</code> manually. The script clones the repo to a
@@ -92,7 +92,7 @@ claude
 
       <section style={{ margin: "48px 0" }}>
         <p style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--color-muted)" }}>
-          Source: <a href="https://github.com/ayushupneja/reskin">github.com/ayushupneja/reskin</a> · MIT
+          Source: <a href="https://github.com/upneja/reskin">github.com/upneja/reskin</a> · MIT
         </p>
       </section>
     </main>

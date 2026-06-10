@@ -117,7 +117,7 @@ export default function ArchetypesPage() {
           Each archetype also carries motion DNA (the personality of motion, not just &quot;smooth&quot;), 2-3
           reference URLs (Awwwards winners or real production sites — not Dribbble shots), and explicit
           anti-rules (what would ruin the archetype). View the raw JSON in the source:{" "}
-          <a href="https://github.com/ayushupneja/reskin/blob/main/skill/archetypes.json">skill/archetypes.json</a>.
+          <a href="https://github.com/upneja/reskin/blob/main/skill/archetypes.json">skill/archetypes.json</a>.
         </p>
       </section>
     </main>

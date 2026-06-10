@@ -105,5 +105,5 @@ The other test will be whether the gallery cuts well in actual Instagram reels. 
 
 *— Ayush Upneja, May 2026*
 *Built with [Claude Code](https://claude.com/code) + the `superpowers` skill suite.*
-*Source: [github.com/ayushupneja/reskin](https://github.com/ayushupneja/reskin)*
+*Source: [github.com/upneja/reskin](https://github.com/upneja/reskin)*
 *Examples and archetype catalog: [design.upneja.ai/reskin](https://design.upneja.ai/reskin)*
